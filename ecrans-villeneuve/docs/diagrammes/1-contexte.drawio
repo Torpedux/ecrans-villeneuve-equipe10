@@ -1,149 +1,179 @@
-<mxfile host="drawio-plugin" modified="2026-10-22T10:45:06.760Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" etag="82uMWoBfP36w54bO0l-I" version="22.1.22" type="embed">
+<mxfile host="drawio-plugin" modified="2026-10-22T11:57:40.605Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="22.1.22" etag="iS_8Rq32j9DaWutf7Pl-" type="embed">
   <diagram name="1-contexte" id="1-contexte">
-    <mxGraphModel dx="747" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1650" pageHeight="1060" math="0" shadow="0">
+    <mxGraphModel dx="859" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1520" pageHeight="819" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="titre" value="Avec qui la billetterie échange-t-elle ?" style="text;html=1;fontSize=22;fontStyle=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#0f172a;" parent="1" vertex="1">
-          <mxGeometry x="40" y="20" width="1000" height="35" as="geometry" />
+          <mxGeometry x="60" y="25" width="1000" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sous_titre" value="Diagramme de contexte système (DAT §3) — Multiplexe Les Écrans de Villeneuve (8 salles, 1450 fauteuils)" style="text;html=1;fontSize=13;fontStyle=2;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#475569;" parent="1" vertex="1">
-          <mxGeometry x="40" y="55" width="1000" height="25" as="geometry" />
+        <mxCell id="sous_titre" value="Diagramme de contexte système (DAT §3 · Modèle C4 Niveau 1) — Les Écrans de Villeneuve" style="text;html=1;fontSize=12;fontStyle=2;align=left;verticalAlign=middle;whiteSpace=wrap;fontColor=#475569;" parent="1" vertex="1">
+          <mxGeometry x="60" y="55" width="1000" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="sys_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=2;arcSize=6;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="540" y="110" width="460" height="710" as="geometry" />
+        <mxCell id="sys_central" value="&lt;b style=&quot;font-size:15px;color:#1e3a8a;&quot;&gt;Système de Billetterie — Les Écrans de Villeneuve&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;color:#1e40af;line-height:1.4;&quot;&gt;Permet la vente multicanale de places, la gestion des séances,&lt;br&gt;le contrôle d&#39;accès et les déclarations réglementaires.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#1d4ed8;strokeWidth=2.5;shadow=1;align=center;verticalAlign=middle;spacing=12;" parent="1" vertex="1">
+          <mxGeometry x="540" y="270" width="440" height="190" as="geometry" />
         </mxCell>
-        <mxCell id="sys_header" value="&lt;b style=&quot;font-size:16px;color:#1e3a8a;&quot;&gt;BILLETTERIE DES ÉCRANS DE VILLENEUVE&lt;/b&gt;&lt;br&gt;&lt;i style=&quot;font-size:11px;color:#3b82f6;&quot;&gt;Cœur du système étudié (Multiplexe indépendant)&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;" parent="1" vertex="1">
-          <mxGeometry x="550" y="125" width="440" height="45" as="geometry" />
+        <mxCell id="act_client" value="&lt;b&gt;Client (Spectateur)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Achète des places, paie en ligne et reçoit ses billets.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontSize=11;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="110" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap1" value="Gestion du Catalogue &amp; Programmation (Salles, Séances, Horaires)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="185" width="410" height="50" as="geometry" />
+        <mxCell id="act_abonne" value="&lt;b&gt;Abonné (Villeneuve Illimité)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Souscrit à la formule illimitée et réserve sa place.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontSize=11;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="185" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap2" value="Vente directe (Guichets, Web, Appli, Bornes) &amp; Tarifs (B3, B6)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="255" width="410" height="50" as="geometry" />
+        <mxCell id="act_caissier" value="&lt;b&gt;Caissier (3 Guichets)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Vend des billets et encaisse les clients au guichet.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontSize=11;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="260" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap3" value="Réservation de places &amp; Verrouillage temporaire 10 min (B1, B2)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="325" width="410" height="50" as="geometry" />
+        <mxCell id="act_accueil" value="&lt;b&gt;Agent d&#39;accueil&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Scanne les billets à l&#39;entrée avec des douchettes.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontSize=11;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="335" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap4" value="Gestion Abonnements Villeneuve Illimité &amp; No-shows (B7, B8, B16)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="395" width="410" height="50" as="geometry" />
+        <mxCell id="act_prog" value="&lt;b&gt;Programmateur (Julien Morel)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Définit les films, salles et horaires des séances.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=1.5;fontSize=11;fontColor=#713f12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="410" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap5" value="Intégration Partenaires (SortiesFlash, CinéMalin) via ACL (B11)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="465" width="410" height="50" as="geometry" />
+        <mxCell id="act_mkt" value="&lt;b&gt;Responsable Marketing (Sabine Okafor)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Fixe la grille tarifaire et les offres promotionnelles.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=1.5;fontSize=11;fontColor=#713f12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="485" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap6" value="Orchestration des Paiements &amp; Remboursements PayVia (B9, B10, B13, B14)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="535" width="410" height="50" as="geometry" />
+        <mxCell id="act_raf" value="&lt;b&gt;Resp. Financier (Marc Lefebvre)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Supervise les recettes et dépose la déclaration CNC.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=1.5;fontSize=11;fontColor=#713f12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="560" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap7" value="Contrôle d&#39;accès &amp; Validation des scans billets (B12)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="605" width="410" height="50" as="geometry" />
+        <mxCell id="ext_payvia" value="&lt;b&gt;PayVia (Paiement en ligne)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Assure l&#39;encaissement CB, prélèvements et remboursements.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;strokeWidth=1.5;fontSize=11;fontColor=#7f1d1d;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="130" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="cap8" value="Agrégation des entrées &amp; Préparation déclaration CNC (C4)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#93c5fd;strokeWidth=1;fontSize=11;fontColor=#1e40af;align=center;verticalAlign=middle;fontStyle=0;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="565" y="675" width="410" height="50" as="geometry" />
+        <mxCell id="ext_partenaires" value="&lt;b&gt;Partenaires (SortiesFlash, CinéMalin)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Commercialisent des places sur leurs propres canaux.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#ea580c;strokeWidth=1.5;fontSize=11;fontColor=#7c2d12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="230" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="zone_acteurs" value="&lt;b&gt;ACTEURS HUMAINS (Utilisateurs du système)&lt;/b&gt;" style="text;html=1;fontSize=12;fontColor=#065f46;align=left;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="50" y="90" width="350" height="25" as="geometry" />
+        <mxCell id="ext_filmodata" value="&lt;b&gt;FilmoData (Catalogue de films)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Fournit les fiches descriptives et durées des films.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#475569;strokeWidth=1.5;fontSize=11;fontColor=#0f172a;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="330" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="zone_externes" value="&lt;b&gt;SYSTÈMES &amp; PARTENAIRES EXTERNES&lt;/b&gt;" style="text;html=1;fontSize=12;fontColor=#991b1b;align=left;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="1170" y="90" width="350" height="25" as="geometry" />
+        <mxCell id="ext_notif" value="&lt;b&gt;Service d&#39;Envoi (SMS &amp; E-mail)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Achemine les e-billets et alertes par SMS et e-mail.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#475569;strokeWidth=1.5;fontSize=11;fontColor=#0f172a;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="430" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="act_client" value="&lt;b&gt;Client (Spectateur)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#047857;&quot;&gt;Canaux : Web, Appli mobile, Bornes hall&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=2;fontSize=12;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="50" y="120" width="310" height="75" as="geometry" />
+        <mxCell id="ext_cnc" value="&lt;b&gt;Portail du CNC&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;Réceptionne la déclaration réglementaire hebdomadaire.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#b91c1c;strokeWidth=1.5;fontSize=11;fontColor=#7f1d1d;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="530" width="360" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="act_abonne" value="&lt;b&gt;Abonné (Villeneuve Illimité)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#047857;&quot;&gt;Souscription, place offerte, annulation sans frais&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=2;fontSize=12;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="50" y="230" width="310" height="75" as="geometry" />
+        <mxCell id="e_client_sys" value="Réserve et paie ses places" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#059669;fontColor=#064e3b;" parent="1" source="act_client" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="137" />
+              <mxPoint x="480" y="290" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="act_caissier" value="&lt;b&gt;Caissier (3 Guichets)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#047857;&quot;&gt;Vente pour client présent, encaissement CB/espèces&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=2;fontSize=12;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="50" y="340" width="310" height="75" as="geometry" />
+        <mxCell id="e_abonne_sys" value="Gère son abonnement et réserve" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#059669;fontColor=#064e3b;" parent="1" source="act_abonne" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="495" y="212" />
+              <mxPoint x="495" y="315" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="act_accueil" value="&lt;b&gt;Agent d&#39;accueil&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#047857;&quot;&gt;Contrôle d&#39;accès / Douchettes (mode hors-ligne toléré)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=2;fontSize=12;fontColor=#064e3b;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="50" y="450" width="310" height="75" as="geometry" />
+        <mxCell id="e_caissier_sys" value="Vend des places au guichet" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#059669;fontColor=#064e3b;" parent="1" source="act_caissier" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="287" />
+              <mxPoint x="510" y="340" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="act_prog" value="&lt;b&gt;Programmateur (Julien)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#854d0e;&quot;&gt;Planification séances, ouverture ventes mardi soir&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=2;fontSize=12;fontColor=#713f12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="50" y="560" width="310" height="75" as="geometry" />
-        </mxCell>
-        <mxCell id="act_mkt" value="&lt;b&gt;Responsable Marketing (Sabine)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#854d0e;&quot;&gt;Tarifs, suppléments 3D/GL, opérations spéciales (5€)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=2;fontSize=12;fontColor=#713f12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="50" y="670" width="310" height="75" as="geometry" />
-        </mxCell>
-        <mxCell id="act_raf" value="&lt;b&gt;Resp. Administratif &amp; Financier (Marc)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#854d0e;&quot;&gt;Déclaration CNC hebdomadaire, suivi reversements (-8%)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=2;fontSize=12;fontColor=#713f12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="50" y="780" width="310" height="75" as="geometry" />
-        </mxCell>
-        <mxCell id="ext_payvia" value="&lt;b&gt;PayVia (Paiement en ligne)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#991b1b;&quot;&gt;Paiements CB, prélèvements abonnés, remboursements&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;strokeWidth=2;fontSize=12;fontColor=#7f1d1d;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="1170" y="120" width="330" height="85" as="geometry" />
-        </mxCell>
-        <mxCell id="ext_partenaires" value="&lt;b&gt;Plateformes Partenaires&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;font-weight:bold;color:#c2410c;&quot;&gt;SortiesFlash &amp;amp; CinéMalin&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#9a3412;&quot;&gt;Ventes pré-payées formats partenaires (B11, ACL)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#ea580c;strokeWidth=2;fontSize=12;fontColor=#7c2d12;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="1170" y="250" width="330" height="85" as="geometry" />
-        </mxCell>
-        <mxCell id="ext_filmodata" value="&lt;b&gt;FilmoData (Catalogue externe)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#334155;&quot;&gt;API REST en anglais : fiches films, durées en secondes&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#475569;strokeWidth=2;fontSize=12;fontColor=#0f172a;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="1170" y="380" width="330" height="85" as="geometry" />
-        </mxCell>
-        <mxCell id="ext_notif" value="&lt;b&gt;Service d&#39;Envoi (SMS &amp;amp; E-mail)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#334155;&quot;&gt;Envoi billets électroniques (QR code) &amp;amp; alertes annulation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f1f5f9;strokeColor=#475569;strokeWidth=2;fontSize=12;fontColor=#0f172a;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="1170" y="510" width="330" height="85" as="geometry" />
-        </mxCell>
-        <mxCell id="ext_cnc" value="&lt;b&gt;Portail CNC&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;color:#991b1b;&quot;&gt;Centre National du Cinéma (Déclaration réglementaire C4)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#b91c1c;strokeWidth=2;fontSize=12;fontColor=#7f1d1d;align=center;verticalAlign=middle;shadow=1;" parent="1" vertex="1">
-          <mxGeometry x="1170" y="640" width="330" height="85" as="geometry" />
-        </mxCell>
-        <mxCell id="box_hors_perimetre" value="&lt;b&gt;SYSTÈMES HORS PÉRIMÈTRE BILLETTERIE (Cités au sujet 3.5)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px;&quot;&gt;Confiserie &amp;amp; Bar · Régie publicitaire avant-séance · Ventes groupes &amp;amp; scolaires · Paie &amp;amp; Comptabilité générale&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;strokeWidth=1;strokeFactor=1;dashed=1;align=center;verticalAlign=middle;fontSize=12;fontColor=#475569;" parent="1" vertex="1">
-          <mxGeometry x="540" y="840" width="960" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="e_client_sys" value="Choix places (max 10), paiement, annulation (B9)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#059669;strokeWidth=1.5;fontSize=10;fontColor=#064e3b;labelBackgroundColor=#ffffff;" parent="1" source="act_client" target="sys_box" edge="1">
+        <mxCell id="e_accueil_sys" value="Scanne les billets" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#059669;fontColor=#064e3b;" parent="1" source="act_accueil" target="sys_central" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_abonne_sys" value="Réservation place gratuite (B7), annulation H-30m (B16)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#059669;strokeWidth=1.5;fontSize=10;fontColor=#064e3b;labelBackgroundColor=#ffffff;" parent="1" source="act_abonne" target="sys_box" edge="1">
+        <mxCell id="e_prog_sys" value="Publie la programmation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#ca8a04;fontColor=#713f12;" parent="1" source="act_prog" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="437" />
+              <mxPoint x="510" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_mkt_sys" value="Définit tarifs et formules" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#ca8a04;fontColor=#713f12;" parent="1" source="act_mkt" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="495" y="512" />
+              <mxPoint x="495" y="415" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_raf_sys" value="Consulte les états de vente" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#ca8a04;fontColor=#713f12;" parent="1" source="act_raf" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="587" />
+              <mxPoint x="480" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_sys_payvia" value="Demande de paiement" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#dc2626;fontColor=#7f1d1d;" parent="1" source="sys_central" target="ext_payvia" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="310" />
+              <mxPoint x="1030" y="157" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_payvia_sys" value="Confirme les paiements" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#dc2626;fontColor=#7f1d1d;" parent="1" source="ext_payvia" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="175" />
+              <mxPoint x="1050" y="335" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_part_sys" value="Transmettent les ventes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#ea580c;fontColor=#7c2d12;" parent="1" source="ext_partenaires" target="sys_central" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1040" y="257" />
+              <mxPoint x="1040" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_filmo_sys" value="Fournit les fiches films" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#475569;fontColor=#1e293b;" parent="1" source="ext_filmodata" target="sys_central" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e_caissier_sys" value="Vente comptoir, encaissement direct, impression papier" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#059669;strokeWidth=1.5;fontSize=10;fontColor=#064e3b;labelBackgroundColor=#ffffff;" parent="1" source="act_caissier" target="sys_box" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_sys_notif" value="Envoie les billets (QR code)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#475569;fontColor=#1e293b;" parent="1" source="sys_central" target="ext_notif" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1040" y="420" />
+              <mxPoint x="1040" y="457" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_accueil_sys" value="Scan billets (H-30m à H+15m) &amp; validation présence (B8, B12)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#059669;strokeWidth=1.5;fontSize=10;fontColor=#064e3b;labelBackgroundColor=#ffffff;" parent="1" source="act_accueil" target="sys_box" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_sys_cnc" value="Génère la déclaration" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#b91c1c;fontColor=#7f1d1d;" parent="1" source="sys_central" target="ext_cnc" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1030" y="440" />
+              <mxPoint x="1030" y="557" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_prog_sys" value="Publication séances (mardi soir B4), annulation séance (B10)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ca8a04;strokeWidth=1.5;fontSize=10;fontColor=#713f12;labelBackgroundColor=#ffffff;" parent="1" source="act_prog" target="sys_box" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="e_raf_cnc" value="Dépose la déclaration" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;jumpSize=6;strokeWidth=1.5;fontSize=10;labelBackgroundColor=#ffffff;spacing=3;strokeColor=#b91c1c;fontColor=#7f1d1d;dashed=1;" parent="1" source="act_raf" target="ext_cnc" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="600" />
+              <mxPoint x="450" y="600" />
+              <mxPoint x="450" y="640" />
+              <mxPoint x="1070" y="640" />
+              <mxPoint x="1070" y="575" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="e_mkt_sys" value="Grille tarifaire, suppléments 3D/GL, opérations promo" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ca8a04;strokeWidth=1.5;fontSize=10;fontColor=#713f12;labelBackgroundColor=#ffffff;" parent="1" source="act_mkt" target="sys_box" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_raf_sys" value="Extraction données déclaration CNC &amp; suivi reversements (-8%)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ca8a04;strokeWidth=1.5;fontSize=10;fontColor=#713f12;labelBackgroundColor=#ffffff;" parent="1" source="act_raf" target="sys_box" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_sys_payvia" value="Autorisation paiement, prélèvements, remboursements" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#dc2626;strokeWidth=1.5;fontSize=10;fontColor=#7f1d1d;labelBackgroundColor=#ffffff;" parent="1" source="sys_box" target="ext_payvia" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_part_sys" value="Transmission ventes pré-payées format partenaire (B11)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ea580c;strokeWidth=1.5;fontSize=10;fontColor=#7c2d12;labelBackgroundColor=#ffffff;" parent="1" source="ext_partenaires" target="sys_box" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_filmo_sys" value="Import fiches films, titres, durées en secondes" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;fontSize=10;fontColor=#1e293b;labelBackgroundColor=#ffffff;" parent="1" source="ext_filmodata" target="sys_box" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_sys_notif" value="Ordres d&#39;envoi e-billets (QR code) &amp; alertes annulation" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#475569;strokeWidth=1.5;fontSize=10;fontColor=#1e293b;labelBackgroundColor=#ffffff;" parent="1" source="sys_box" target="ext_notif" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="e_sys_cnc" value="Fichier hebdomadaire déclaration entrées (C4)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#dc2626;strokeWidth=1.5;fontSize=10;fontColor=#7f1d1d;labelBackgroundColor=#ffffff;" parent="1" source="sys_box" target="ext_cnc" edge="1">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="box_hors_perimetre" value="&lt;b style=&quot;font-size:11px;color:#475569;&quot;&gt;Domaines hors périmètre billetterie (Sujet §3.5) :&lt;/b&gt; Confiserie &amp; Bar · Régie publicitaire d&#39;avant-séance · Ventes groupes &amp; scolaires · Paie &amp; Comptabilité générale" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;strokeWidth=1;dashed=1;fontSize=10;fontColor=#64748b;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="60" y="670" width="840" height="50" as="geometry" />
         </mxCell>
         <mxCell id="box_legende" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#cbd5e1;strokeWidth=1;shadow=0;" parent="1" vertex="1">
-          <mxGeometry x="50" y="930" width="1450" height="70" as="geometry" />
+          <mxGeometry x="930" y="670" width="530" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="lbl_legende" value="&lt;b&gt;LÉGENDE :&lt;/b&gt;" style="text;html=1;fontSize=11;fontColor=#334155;align=left;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="65" y="950" width="80" height="30" as="geometry" />
+        <mxCell id="lbl_legende" value="&lt;b style=&quot;font-size:10px;color:#334155;&quot;&gt;LÉGENDE :&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="940" y="682" width="65" height="25" as="geometry" />
         </mxCell>
-        <mxCell id="leg1" value="Système Billetterie (Cœur)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eff6ff;strokeColor=#2563eb;strokeWidth=1.5;fontSize=10;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="155" y="948" width="180" height="34" as="geometry" />
+        <mxCell id="leg_core" value="Système Billetterie" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#1d4ed8;strokeWidth=1;fontSize=9;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1010" y="683" width="100" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="leg2" value="Acteurs Clients / Abonnés" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1.5;fontSize=10;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="375" y="948" width="180" height="34" as="geometry" />
+        <mxCell id="leg_user" value="Acteurs Métier" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ecfdf5;strokeColor=#059669;strokeWidth=1;fontSize=9;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1125" y="683" width="100" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="leg3" value="Acteurs Métier Cinéma" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=1.5;fontSize=10;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="595" y="948" width="180" height="34" as="geometry" />
+        <mxCell id="leg_part" value="Partenaires Vente" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#ea580c;strokeWidth=1;fontSize=9;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1235" y="683" width="100" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="leg4" value="Partenaires Vente (ACL)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffedd5;strokeColor=#ea580c;strokeWidth=1.5;fontSize=10;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="815" y="948" width="180" height="34" as="geometry" />
-        </mxCell>
-        <mxCell id="leg5" value="Systèmes &amp; Services Tiers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;strokeWidth=1.5;fontSize=10;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="1035" y="948" width="180" height="34" as="geometry" />
-        </mxCell>
-        <mxCell id="leg6" value="Hors Périmètre" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#94a3b8;strokeWidth=1.5;dashed=1;fontSize=10;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
-          <mxGeometry x="1255" y="948" width="180" height="34" as="geometry" />
+        <mxCell id="leg_tier" value="Systèmes Externes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;strokeWidth=1;fontSize=9;fontColor=#1e293b;align=center;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="1345" y="683" width="100" height="24" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
