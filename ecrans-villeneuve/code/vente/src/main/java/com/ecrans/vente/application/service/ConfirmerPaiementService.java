@@ -37,9 +37,29 @@ public class ConfirmerPaiementService implements ConfirmerPaiement {
 
     @Override
     public void executer(CommandeId id) {
-        // TODO étape 4
-        // INDICE : même schéma qu'au TP3 (charger, faire décider le domaine, enregistrer, publier).
-        // INDICE : ici, la commande est payée ET ses places sont vendues.
-        throw new UnsupportedOperationException("À compléter : étape 4");
+        Commande commande = commandes.parId(id)
+                .orElseThrow(() -> new CommandeInconnue(id));
+
+        // Bonus B14 : idempotence des notifications de paiement (au moins une fois)
+        if (commande.statut() == StatutCommande.PAYEE || commande.statut() == StatutCommande.A_REMBOURSER) {
+            return;
+        }
+
+        Seance seance = seances.parId(commande.seance())
+                .orElseThrow(() -> new SeanceInconnue(commande.seance()));
+
+        LocalDateTime maintenant = LocalDateTime.now(horloge);
+
+        try {
+            seance.vendre(id, commande.places(), maintenant);
+            commande.payer(maintenant);
+            seances.enregistrer(seance);
+        } catch (PlacesIndisponibles e) {
+            // Bonus B13 : places reprises entre-temps, remboursement immédiat
+            commande.aRembourser(maintenant);
+        }
+
+        commandes.enregistrer(commande);
+        commande.retirerEvenements().forEach(publicateur::publier);
     }
 }
