@@ -1,0 +1,5 @@
+.idea/
+*.iml
+code/vente/target/
+# fichiers de verrouillage de Word
+~$*
