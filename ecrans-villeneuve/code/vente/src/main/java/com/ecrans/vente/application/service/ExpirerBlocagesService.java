@@ -31,9 +31,23 @@ public class ExpirerBlocagesService implements ExpirerBlocages {
 
     @Override
     public void executer() {
-        // TODO étape 5
-        // INDICE : les séances d'abord (libererBlocagesExpires), puis les commandes concernées.
-        throw new UnsupportedOperationException("À compléter : étape 5");
+        LocalDateTime maintenant = LocalDateTime.now(horloge);
+
+        for (Seance seance : seances.enVente()) {
+            Set<CommandeId> commandesConcernees = seance.libererBlocagesExpires(maintenant);
+            if (commandesConcernees.isEmpty()) {
+                continue;
+            }
+            seances.enregistrer(seance);
+
+            for (CommandeId commandeId : commandesConcernees) {
+                commandes.parId(commandeId).ifPresent(commande -> {
+                    if (commande.statut() == StatutCommande.EN_ATTENTE_PAIEMENT) {
+                        expirer(commande, maintenant);
+                    }
+                });
+            }
+        }
     }
 
     private void expirer(Commande commande, LocalDateTime maintenant) {
