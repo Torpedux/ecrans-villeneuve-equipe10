@@ -1,0 +1,55 @@
+@startuml 4-sequence-reserver-payer
+title Comment des places sont-elles réservées puis payées… ou libérées ?
+actor Client
+participant "ReservationController\n(adapter in/web)" as Ctrl
+participant "ReserverDesPlacesService\n(via port ReserverDesPlaces)" as Res
+participant "GrilleTarifaire\n(port out)" as Grille
+participant "Seances\n(port out)" as Seances
+participant "Seance\n(agrégat)" as Seance
+participant "Commande\n(agrégat)" as Commande
+participant "Commandes\n(port out)" as Commandes
+participant "Paiements\n(port out → ACL PayVia)" as Paiements
+participant "WebhookPayVia\n(ACL, adapter in)" as Webhook
+participant "ConfirmerPaiementService" as Conf
+participant "PublicateurEvenements\n(port out)" as Pub
+participant "ExpirationPlanifiee\n→ ExpirerBlocagesService" as Exp
+
+Client -> Ctrl : POST /seances/S42/reservations\n{billets}
+Ctrl -> Res : executer(DemandeReservation)
+Res -> Grille : prix(seance, categorie) pour chaque billet (B6)
+Res -> Seances : parId(seance)
+Seances --> Res : Seance (ou SeanceInconnue → 404)
+Res -> Seance : bloquer(places, commande, maintenant)
+note right : B1, B2, B4 — tout ou rien\nPlacesIndisponibles → 409
+Seance --> Res : payerAvant (maintenant + 10 min)
+Res -> Commande : creer(id, seance, billets, payerAvant)
+note right : B3 — TropDePlaces → 422
+Res -> Seances : enregistrer(seance)
+Res -> Commandes : enregistrer(commande)
+Res -> Paiements : demanderPaiement(id, total)
+Paiements --> Res : urlPaiement
+Res --> Ctrl : Reservation
+Ctrl --> Client : 201 {commande, total, urlPaiement, payerAvant}
+
+alt Le client paie avant payerAvant (ou un peu après, B13)
+  Client -> Webhook : payment.succeeded (via PayVia)
+  Webhook -> Conf : executer(commande)
+  Conf -> Commande : payer(maintenant)
+  Conf -> Seance : vendre(commande, places, maintenant)
+  Conf -> Seances : enregistrer(seance)
+  Conf -> Commandes : enregistrer(commande)
+  Conf -> Pub : publier(CommandePayee)
+  Webhook --> Client : 204
+else Personne ne paie dans les 10 minutes
+  loop chaque minute
+    Exp -> Seances : enVente()
+    Exp -> Seance : libererBlocagesExpires(maintenant)
+    Seance --> Exp : commandes concernées
+    Exp -> Commande : expirer(maintenant)
+    Exp -> Seances : enregistrer(seance)
+    Exp -> Commandes : enregistrer(commande)
+    Exp -> Pub : publier(CommandeExpiree)
+  end
+  note over Seance : Les places redeviennent libres (B2)
+end
+@enduml

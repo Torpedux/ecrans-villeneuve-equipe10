@@ -51,9 +51,28 @@ public class ReserverDesPlacesService implements ReserverDesPlaces {
 
     @Override
     public Reservation executer(DemandeReservation demande) {
-        // TODO étape 3
-        // INDICE : même schéma qu'au TP3. Le prix de chaque billet vient de la grille (B6),
-        // INDICE : et PayVia n'est appelé qu'une fois tout enregistré.
-        throw new UnsupportedOperationException("À compléter : étape 3");
+        LocalDateTime maintenant = LocalDateTime.now(horloge);
+        CommandeId id = CommandeId.nouvelle();
+
+        // B6 : le prix de chaque billet est figé maintenant, d'après la grille
+        List<Billet> billets = demande.billets().stream()
+                .map(b -> new Billet(b.place(), new Tarif(b.categorie(), grille.prix(demande.seance(), b.categorie()))))
+                .toList();
+
+        Seance seance = seances.parId(demande.seance())
+                .orElseThrow(() -> new SeanceInconnue(demande.seance()));
+
+        // Le domaine décide : toutes les décisions sont prises avant le premier enregistrement
+        Set<PlaceId> placesDemandees = billets.stream().map(Billet::place).collect(Collectors.toSet());
+        LocalDateTime payerAvant = seance.bloquer(placesDemandees, id, maintenant);
+        Commande commande = Commande.creer(id, demande.seance(), billets, payerAvant);
+
+        seances.enregistrer(seance);
+        commandes.enregistrer(commande);
+
+        // PayVia n'est appelé qu'une fois la commande enregistrée
+        String urlPaiement = paiements.demanderPaiement(id, commande.total());
+
+        return new Reservation(id, commande.total(), urlPaiement, payerAvant);
     }
 }

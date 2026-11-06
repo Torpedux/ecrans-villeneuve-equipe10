@@ -62,11 +62,24 @@ public class Seance {
      * @throws PlacesIndisponibles  si une place est déjà bloquée (blocage en cours) ou vendue (B1)
      */
     public LocalDateTime bloquer(Set<PlaceId> demandees, CommandeId commande, LocalDateTime maintenant) {
-        // TODO étape 1
-        // INDICE : vérifiez d'abord B4 (venteOuverteA), puis que chaque place existe,
-        // INDICE : puis rassemblez TOUTES les places non libres (EtatPlace.estLibreA) avant de lever l'exception.
-        // INDICE : ne modifiez la map qu'une fois toutes les vérifications passées (tout ou rien).
-        throw new UnsupportedOperationException("À compléter : étape 1");
+        // B4 : on ne bloque rien une fois la vente fermée
+        if (!venteOuverteA(maintenant)) throw new VenteFermee(id);
+
+        // Toutes les vérifications d'abord : la map n'est pas touchée tant qu'on n'est pas sûr (tout ou rien)
+        Set<PlaceId> indisponibles = new TreeSet<>();
+        for (PlaceId place : demandees) {
+            EtatPlace etat = places.get(place);
+            if (etat == null) throw new PlaceInconnue(id, place);
+            if (!etat.estLibreA(maintenant)) indisponibles.add(place);
+        }
+        if (!indisponibles.isEmpty()) throw new PlacesIndisponibles(indisponibles);
+
+        // B2 : blocage de 10 minutes
+        LocalDateTime jusqua = maintenant.plus(DUREE_BLOCAGE);
+        for (PlaceId place : demandees) {
+            places.put(place, EtatPlace.bloquee(commande, jusqua));
+        }
+        return jusqua;
     }
 
     /**
@@ -76,10 +89,19 @@ public class Seance {
      * @throws PlacesIndisponibles si une place a été prise par quelqu'un d'autre entre-temps
      */
     public void vendre(CommandeId commande, Set<PlaceId> placesDeLaCommande, LocalDateTime maintenant) {
-        // TODO étape 1
-        // INDICE : une place est vendable si elle est bloquée par CETTE commande (même si le blocage a expiré),
-        // INDICE : ou si elle est libre à « maintenant ». Sinon : PlacesIndisponibles. Tout ou rien, là aussi.
-        throw new UnsupportedOperationException("À compléter : étape 1");
+        Set<PlaceId> indisponibles = new TreeSet<>();
+        for (PlaceId place : placesDeLaCommande) {
+            EtatPlace etat = places.get(place);
+            if (etat == null) throw new PlaceInconnue(id, place);
+            // B13 : bloquée par CETTE commande (même expirée) ou de nouveau libre => vendable
+            boolean vendable = etat.estBloqueePar(commande) || etat.estLibreA(maintenant);
+            if (!vendable) indisponibles.add(place);
+        }
+        if (!indisponibles.isEmpty()) throw new PlacesIndisponibles(indisponibles);
+
+        for (PlaceId place : placesDeLaCommande) {
+            places.put(place, EtatPlace.vendue(commande));
+        }
     }
 
     /**
@@ -88,9 +110,15 @@ public class Seance {
      * @return les commandes dont les places ont été libérées (pour les faire expirer)
      */
     public Set<CommandeId> libererBlocagesExpires(LocalDateTime maintenant) {
-        // TODO étape 1
-        // INDICE : parcourez places.entrySet() ; EtatPlace.blocageExpireA(maintenant) vous dit quoi libérer.
-        throw new UnsupportedOperationException("À compléter : étape 1");
+        Set<CommandeId> commandes = new LinkedHashSet<>();
+        for (Map.Entry<PlaceId, EtatPlace> entree : places.entrySet()) {
+            EtatPlace etat = entree.getValue();
+            if (etat.blocageExpireA(maintenant)) {
+                commandes.add(etat.commande());
+                entree.setValue(EtatPlace.libre());
+            }
+        }
+        return commandes;
     }
 
     /** B4 : on vend jusqu'à 15 minutes après l'heure de début, incluse. */
