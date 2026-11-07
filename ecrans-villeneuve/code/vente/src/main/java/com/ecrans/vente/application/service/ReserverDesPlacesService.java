@@ -59,20 +59,33 @@ public class ReserverDesPlacesService implements ReserverDesPlaces {
                 .map(b -> new Billet(b.place(), new Tarif(b.categorie(), grille.prix(demande.seance(), b.categorie()))))
                 .toList();
 
-        Seance seance = seances.parId(demande.seance())
-                .orElseThrow(() -> new SeanceInconnue(demande.seance()));
-
-        // Le domaine décide : toutes les décisions sont prises avant le premier enregistrement
         Set<PlaceId> placesDemandees = billets.stream().map(Billet::place).collect(Collectors.toSet());
-        LocalDateTime payerAvant = seance.bloquer(placesDemandees, id, maintenant);
-        Commande commande = Commande.creer(id, demande.seance(), billets, payerAvant);
 
-        seances.enregistrer(seance);
-        commandes.enregistrer(commande);
+        // Bonus ADR-0002 : si une autre vente a enregistré la séance entre notre lecture et notre écriture,
+        // le verrou optimiste lève ConflitDeVersion. On recharge la séance et le domaine redécide :
+        // places différentes → le nouvel essai réussit ; même place → PlacesIndisponibles.
+        Commande commande = null;
+        for (int essai = 1; commande == null; essai++) {
+            Seance seance = seances.parId(demande.seance())
+                    .orElseThrow(() -> new SeanceInconnue(demande.seance()));
+
+            // Le domaine décide : toutes les décisions sont prises avant le premier enregistrement
+            LocalDateTime payerAvant = seance.bloquer(placesDemandees, id, maintenant);
+            Commande nouvelle = Commande.creer(id, demande.seance(), billets, payerAvant);
+
+            try {
+                seances.enregistrer(seance);
+            } catch (ConflitDeVersion conflit) {
+                if (essai >= ESSAIS_MAX) throw conflit;
+                continue;
+            }
+            commandes.enregistrer(nouvelle);
+            commande = nouvelle;
+        }
 
         // PayVia n'est appelé qu'une fois la commande enregistrée
         String urlPaiement = paiements.demanderPaiement(id, commande.total());
 
-        return new Reservation(id, commande.total(), urlPaiement, payerAvant);
+        return new Reservation(id, commande.total(), urlPaiement, commande.expireA());
     }
 }

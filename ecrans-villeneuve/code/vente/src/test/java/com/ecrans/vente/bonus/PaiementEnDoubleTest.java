@@ -5,14 +5,12 @@ import com.ecrans.vente.application.port.in.Reservation;
 import com.ecrans.vente.config.ApplicationVente;
 import com.ecrans.vente.domaine.commande.StatutCommande;
 import com.ecrans.vente.support.HorlogeReglable;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.ecrans.vente.support.Donnees.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /** Bonus B14 · PayVia notifie « au moins une fois » : la même notification peut arriver deux fois. */
-@Disabled("Bonus : supprimez cette ligne pour activer ces tests")
 class PaiementEnDoubleTest {
 
     @Test

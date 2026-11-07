@@ -11,7 +11,6 @@ import com.ecrans.vente.domaine.evenement.PaiementARembourser;
 import com.ecrans.vente.domaine.seance.StatutPlace;
 import com.ecrans.vente.support.HorlogeReglable;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.ecrans.vente.support.Donnees.*;
@@ -21,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Bonus B13 · le lien PayVia vit 15 minutes, le blocage 10. Règle B13 :
  * « Si les places sont encore libres, on les reprend et on vend. Sinon on rembourse tout de suite. »
  */
-@Disabled("Bonus : supprimez cette ligne pour activer ces tests")
 class PaiementTardifTest {
 
     private HorlogeReglable horloge;

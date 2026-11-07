@@ -13,7 +13,6 @@ import com.ecrans.vente.domaine.seance.Seance;
 import com.ecrans.vente.domaine.seance.StatutPlace;
 import com.ecrans.vente.support.HorlogeReglable;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.ecrans.vente.support.Donnees.*;
@@ -24,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * Bonus ADR-0002 · le soir de l'avant-première, deux ventes chargent la même séance au même moment.
  * Le verrou optimiste de l'adapter fait échouer la seconde à enregistrer : le service doit recharger et réessayer.
  */
-@Disabled("Bonus : supprimez cette ligne pour activer ces tests")
 class ConcurrenceTest {
 
     /** Une base « sous pression » : juste avant notre enregistrement, une autre caisse vend une place. */
