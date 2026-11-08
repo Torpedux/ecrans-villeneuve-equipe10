@@ -1,0 +1,60 @@
+# DAT — sections 3 et 9 (ADR-0002) (brouillon Matteo)
+
+> L'ADR-0001 (décisions 1 et 2) est rédigé par Aurel dans `sections_4_5_6_9_10.md`. Ce fichier contient la section 3 et l'**ADR-0002**, qui tranche la décision 3.
+
+## 3. Contexte
+
+Diagramme : `docs/diagrammes/1-contexte` — « Avec qui la billetterie échange-t-elle ? »
+
+La billetterie est vue comme **une seule boîte**. Le diagramme ne montre pas son découpage interne : les bounded contexts sont en section 4. Il montre seulement qui l'utilise et avec quels systèmes elle échange.
+
+### Les acteurs humains
+
+| Acteur | Ce qu'il fait avec la billetterie | Canal | Règles concernées |
+|---|---|---|---|
+| Client (spectateur) | Choisit ses places, paie, annule, reçoit ses billets | Site web, appli mobile, 4 bornes du hall (page web plein écran, C5) | B1 à B4, B6, B9 |
+| Abonné (Villeneuve Illimité) | Souscrit, réserve sa place gratuite, annule | Site, appli, guichet | B7, B8, B15, B16 |
+| Caissier (3 guichets) | Vend pour un client présent, encaisse par carte ou en espèces | Poste de caisse | B1 à B4 (hypothèse 3 : pas de blocage au guichet, section 2) |
+| Agent d'accueil | Scanne les billets à l'entrée | Douchettes, y compris hors ligne | B12 |
+| Programmateur (J. Morel) | Publie et annule les séances | Back-office | B4, B10 |
+| Responsable marketing (S. Okafor) | Saisit la grille tarifaire, les opérations et les formules d'abonnement | Back-office | B6, B7 |
+| Responsable financier (M. Lefebvre) | Relit et dépose la déclaration CNC, suit les reversements des partenaires | Back-office, puis portail CNC | B11, C4 |
+
+### Les systèmes externes
+
+| Système | Sens de l'échange | Ce qui est échangé | Contrainte qu'il impose |
+|---|---|---|---|
+| **PayVia** | Billetterie → PayVia, puis PayVia → billetterie | Demande de paiement (lien valable 15 min) ; **notification webhook** `payment.succeeded` / `payment.failed`, envoyée *au moins une fois* et réessayée (1 min, 5 min, 30 min, 2 h) ; remboursements ; prélèvements des abonnés | Contrat de 4 ans (C3), format imposé (annexe A) → ACL `WebhookPayVia`. Les notifications en double imposent B14, celles en retard imposent B13. |
+| **SortiesFlash**, **CinéMalin** | Partenaire → billetterie | Une vente **déjà payée**, en un seul appel, dans le format du partenaire (annexe B) | B11, chacun son format → une ACL par partenaire (`AclSortiesFlash`). Doit respecter B1 à B4. |
+| **FilmoData** | FilmoData → billetterie | Fiches des films (API en anglais, durées en secondes) | ACL côté Programmation. |
+| **Service d'envoi** | Billetterie → service | Billets (QR code) par email et SMS, avis de remboursement | Prestataire du marché : on suit son API. |
+| **Portail du CNC** | Billetterie → fichier → Marc → portail | Déclaration hebdomadaire des entrées (mercredi → mardi), avant le jeudi midi | Format imposé de 40 pages (C4). Le dépôt est **manuel** : la billetterie produit le fichier, Marc le dépose. |
+
+### Ce qui est hors du périmètre
+
+La confiserie et le bar, la publicité avant les films, les ventes de groupes et scolaires, la paie et la comptabilité (3.8). Ils figurent en bas du diagramme pour montrer qu'on les a vus, mais nous ne les concevons pas.
+
+### Ce que ce diagramme apprend pour l'architecture
+
+- **Trois systèmes nous imposent leur langage** : PayVia, les partenaires et FilmoData. Aucun ne changera pour un cinéma de 8 salles. À chaque entrée, une couche anti-corruption (ACL) traduit leur langage. On le voit dans le code avec `WebhookPayVia` et `AclSortiesFlash`.
+- **Cinq canaux écrivent sur le même plan de salle** : site, appli, bornes, guichets et partenaires. C'est pour cela que B1 (« tous canaux confondus ») ne peut être garanti qu'au centre, dans la Vente, et pas dans chaque canal. L'ADR-0002 explique comment.
+- **Une partie des échanges est asynchrone** : le paiement arrive plus tard par webhook, éventuellement en double ou en retard. Le temps qui passe est un acteur à part entière : le planificateur libère les blocages (B2) sans que personne n'intervienne.
+
+---
+
+## 9. Décisions (ADR)
+
+### ADR-0002 — Agrégats et concurrence de la vente
+
+| Rubrique | Contenu |
+|---|---|
+| **Statut** | Accepté |
+| **Contexte** | **Le problème de mars** : sur une avant-première, 14 places du Grand Large (420 fauteuils) ont été vendues deux fois, et la salle était pleine en moins de 5 minutes. B1 dit qu'une place ne se vend qu'une fois, **tous canaux confondus** : site, appli, bornes, guichets et partenaires écrivent sur le même plan de salle.<br>**Deux questions.** (1) Où passent les frontières des agrégats de la Vente ? Autrement dit, quelles règles doivent être vraies à chaque instant, et dans quel objet ? (2) Comment garantir B1 quand des centaines de ventes arrivent en même temps sur la même séance (décision 3) ?<br>**Le pic à tenir** : 420 places en moins de 5 minutes, soit environ 150 à 200 commandes (2 à 3 places chacune). Elles se concentrent dans la première minute. |
+| **Options envisagées** | **Frontières des agrégats.**<br>• F1 : un seul gros agrégat `Seance` qui contient aussi les commandes.<br>• F2 : **deux agrégats**, `Seance` (le plan de salle) et `Commande` (l'achat), qui se référencent **par identité** (`SeanceId`, `CommandeId`).<br>• F3 : un agrégat par place.<br>**Décision 3 — concurrence.**<br>• A : **un verrou optimiste sur toute la séance**. Chaque enregistrement incrémente la `version` de la séance ; celui qui enregistre une version périmée reçoit `ConflitDeVersion`, recharge et réessaie (3 essais au plus).<br>• B : **un verrou par place**, par exemple une ligne par place vendue avec une contrainte d'unicité `(seance, place)` en base. |
+| **Décision** | **Frontières : F2, deux agrégats.**<br>• `Seance` protège les règles du plan de salle : B1 (une place n'est jamais vendue deux fois), le *tout ou rien* d'une demande, B2 (blocage de 10 minutes) et B4 (fermeture 15 minutes après le début). Toutes ces règles portent sur l'ensemble des places de la séance : il faut les voir toutes pour décider.<br>• `Commande` protège le cycle de l'achat : de 1 à 10 places distinctes (B3), le prix figé dans chaque billet (B6), et les transitions `EN_ATTENTE_PAIEMENT → PAYEE / EXPIREE → A_REMBOURSER`.<br>F1 est écarté : un gros agrégat mettrait dans la même transaction des commandes qui n'ont rien à voir entre elles. F3 est écarté : avec un agrégat par place, plus personne ne voit la séance entière, et le *tout ou rien* devient une transaction sur plusieurs agrégats.<br>**Entorse assumée à « un agrégat par transaction »** : `ReserverDesPlacesService` (bloquer + créer) et `ConfirmerPaiementService` (vendre + payer) écrivent **les deux agrégats dans la même transaction**. « Payée ⇒ vendue » doit être immédiat. Sinon, entre les deux écritures, le blocage pourrait expirer et la place être revendue. Les autres effets passent par des événements (`CommandePayee`, `CommandeExpiree`, `PaiementARembourser`).<br><br>**Décision 3 : option A, verrou optimiste sur la séance**, avec réessai automatique (`ReserverDesPlacesService.ESSAIS_MAX = 3`). Nous la gardons en production, sur PostgreSQL (C1), avec une colonne `version` (`@Version` JPA, `UPDATE … WHERE version = ?`). |
+| **Pourquoi A** | • **B1 est garanti par construction, dans le domaine.** `Seance.bloquer` et `Seance.vendre` regardent toutes les places avant d'en modifier une. Le verrou garantit qu'elles le font sur l'état le plus récent. La règle se lit dans `Seance.java` et se teste sans base (`SeanceTest`).<br>• **Le *tout ou rien* est gratuit.** Une demande de 4 places est une seule écriture de la séance. Avec l'option B, il faudrait poser 4 verrous, dans un ordre fixe pour éviter les interblocages, et défaire les premiers si le troisième échoue.<br>• **Le conflit coûte peu.** On recharge la séance et le domaine redécide. Si les places sont différentes, le second essai réussit (`ConcurrenceTest.places_differentes_le_service_reessaie_et_reussit`). Si c'est la même place, c'est exactement le cas de mars : `PlacesIndisponibles`, 409 (`meme_place_le_second_essai_constate_qu_elle_est_prise`).<br>• **Le volume reste modeste.** Ordre de grandeur, en supposant 200 commandes concentrées dans la première minute (~3,3 par seconde) et une transaction de ~30 ms : ~10 % des enregistrements entrent en conflit au premier essai, ~1 % au deuxième, ~0,1 % au troisième. Cela fait moins d'un client sur toute l'avant-première qui reçoit un 409 pour une place que personne d'autre ne voulait.<br>• **Cohérent avec une petite équipe** : pas de verrou en base à orchestrer, une seule règle à comprendre. |
+| **Conséquences positives** | • B1 et le *tout ou rien* restent dans l'agrégat, testés en Java pur, indépendants de la base (hexagone : la base n'est qu'un adapter).<br>• Le même mécanisme protège **tous les canaux** : site, bornes, guichets et partenaires (`EnregistrerVentePartenaireService` passe aussi par `Seance.bloquer` puis `vendre`).<br>• Le webhook PayVia est naturellement réessayé : un `ConflitDeVersion` pendant `ConfirmerPaiement` renvoie 409, PayVia renvoie la notification une minute plus tard, et l'idempotence (B14) rend ce second passage sûr. |
+| **Conséquences négatives (ce que ça coûte)** | • **Faux conflits au pic** : deux clients qui veulent des places *différentes* de la même séance se gênent. Le second recharge et réessaie, ce qui ajoute de la latence, et après 3 conflits il reçoit un 409 alors que sa place était libre.<br>• **Toutes les ventes d'une séance passent en file** : le débit d'écriture par séance est limité. Ce n'est pas un problème à 35 séances par jour, mais ça le deviendrait avec beaucoup plus de ventes simultanées par séance.<br>• **Le planificateur est aussi en concurrence** : `ExpirerBlocagesService` enregistre les séances qu'il libère. Un conflit interrompt son passage, qui reprend à la minute suivante (une place peut rester bloquée ~1 minute de plus).<br>• **Un trou dans B13, repéré en relisant le code** : si un blocage a expiré et que la place est reprise par un autre client **avant** le passage du planificateur, la commande d'origine reste `EN_ATTENTE_PAIEMENT`. Le planificateur ne la retrouvera plus, car la place porte désormais une autre commande. Si le paiement arrive ensuite, `aRembourser` refuse la transition depuis `EN_ATTENTE_PAIEMENT`. |
+| **Parades** | • Mesurer : test de charge de l'avant-première (objectif de qualité n°3 : p95 < 1 s), en comptant les conflits et les 409.<br>• Si les conflits sont trop nombreux : plus d'essais avec une petite attente aléatoire ; puis, si ça ne suffit pas, **passer à l'option B pour les seules séances au pic** (table des places vendues avec `UNIQUE(seance, place)`). Le port `Seances` isole ce changement de l'application.<br>• Trou de B13 : autoriser `Commande.aRembourser` depuis `EN_ATTENTE_PAIEMENT`, ou faire expirer la commande d'origine au moment où sa place est reprise. Un test bonus à ajouter : « blocage expiré, place reprise avant le planificateur, puis paiement ». |
+| **Option écartée et pourquoi** | **B, verrou par place.** C'est son meilleur argument : au pic, seuls deux clients qui veulent **le même fauteuil** entrent en conflit, exactement le cas de mars et rien d'autre. Mais `Seance` ne protégerait plus B1 à elle seule. La garantie descendrait dans la base, sous forme de contrainte d'unicité, hors du domaine et de ses tests. Le *tout ou rien* demanderait plusieurs verrous ordonnés, avec un risque d'interblocage. Pour notre volume, ce serait de la complexité payée d'avance. Nous gardons B comme évolution possible, mesurée et ciblée. |
+| **Ce qui le prouve dans le code** | `domaine/seance/Seance.java` (`bloquer`, `vendre`, `version`) · `adapter/out/memoire/SeancesEnMemoire.enregistrer` (verrou optimiste) · `application/port/out/ConflitDeVersion` · `ReserverDesPlacesService` (boucle de réessai) · `ConfirmerPaiementService` (vendre + payer, idempotence B14, paiement tardif B13) · `GestionErreurs` (`ConflitDeVersion` → 409) · tests `bonus/ConcurrenceTest`, `bonus/PaiementEnDoubleTest`, `bonus/PaiementTardifTest`. |
