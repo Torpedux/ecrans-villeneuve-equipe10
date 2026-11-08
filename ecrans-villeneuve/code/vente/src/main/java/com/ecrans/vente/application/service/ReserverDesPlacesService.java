@@ -1,13 +1,12 @@
 package com.ecrans.vente.application.service;
 
 import com.ecrans.vente.application.exception.SeanceInconnue;
-import com.ecrans.vente.application.port.in.DemandeBillet;
 import com.ecrans.vente.application.port.in.DemandeReservation;
 import com.ecrans.vente.application.port.in.Reservation;
 import com.ecrans.vente.application.port.in.ReserverDesPlaces;
 import com.ecrans.vente.application.port.out.Commandes;
-import com.ecrans.vente.application.port.out.GrilleTarifaire;
 import com.ecrans.vente.application.port.out.ConflitDeVersion;
+import com.ecrans.vente.application.port.out.GrilleTarifaire;
 import com.ecrans.vente.application.port.out.Paiements;
 import com.ecrans.vente.application.port.out.Seances;
 import com.ecrans.vente.domaine.commande.Billet;
