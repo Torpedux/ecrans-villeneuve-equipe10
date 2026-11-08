@@ -1,11 +1,176 @@
-<mxfile host="app.diagrams.net">
+<mxfile host="drawio-plugin" modified="2026-11-08T11:01:12.457Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="22.1.22" etag="FPwTTHfxTjdSipdgr8Z2" type="embed">
   <diagram name="5-modele-vente" id="5-modele-vente">
-    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="859" dy="704" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
       <root>
-        <mxCell id="0"/>
-        <mxCell id="1" parent="0"/>
-        <mxCell id="titre" value="Quels agrégats protègent les règles de la vente ?" style="text;html=1;fontSize=20;fontStyle=1;align=left;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="40" y="20" width="1000" height="40" as="geometry"/>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="titre" value="Quels agrégats protègent les règles de la vente ?" style="text;html=1;fontSize=20;fontStyle=1;align=left;verticalAlign=middle;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="1000" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zS" value="Agrégat Seance — protège B1 (une place n&#39;est jamais vendue deux fois)" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#f5f9ff;strokeColor=#6c8ebf;dashed=1;verticalAlign=top;align=left;spacingLeft=8;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="40" y="80" width="460" height="760" as="geometry" />
+        </mxCell>
+        <mxCell id="zC" value="Agrégat Commande — protège le cycle de l&#39;achat (de 1 à 10 billets)" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#f6fbf3;strokeColor=#82b366;dashed=1;verticalAlign=top;align=left;spacingLeft=8;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="540" y="80" width="520" height="760" as="geometry" />
+        </mxCell>
+        <mxCell id="zE" value="Événements du domaine (enregistrés par Commande, jamais publiés par lui)" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#fff8f0;strokeColor=#d79b00;dashed=1;verticalAlign=top;align=left;spacingLeft=8;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="80" width="400" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="zV" value="Value objects partagés (domaine/commun)" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#666666;dashed=1;verticalAlign=top;align=left;spacingLeft=8;fontStyle=1;fontSize=13;" parent="1" vertex="1">
+          <mxGeometry x="1100" y="450" width="400" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="Seance" value="«Aggregate Root»&lt;br&gt;Seance" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="60" y="120" width="420" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="Seanceb" value="- id : SeanceId&lt;br&gt;- debut : LocalDateTime&lt;br&gt;- places : Map&amp;lt;PlaceId, EtatPlace&amp;gt;&lt;br&gt;- version : long  (verrou optimiste)&lt;br&gt;&lt;hr&gt;&lt;br&gt;+ ouverte(id, debut, plan) : Seance&lt;br&gt;+ reconstituer(id, debut, places, version) : Seance&lt;br&gt;+ bloquer(places, commande, maintenant) : LocalDateTime&lt;br&gt;+ vendre(commande, places, maintenant)&lt;br&gt;+ libererBlocagesExpires(maintenant) : Set&amp;lt;CommandeId&amp;gt;&lt;br&gt;+ venteOuverteA(maintenant) : boolean&lt;br&gt;+ placesLibresA(maintenant) : Set&amp;lt;PlaceId&amp;gt;&lt;br&gt;+ etat(place) : EtatPlace&lt;br&gt;&lt;hr&gt;&lt;br&gt;DUREE_BLOCAGE = 10 min   FERMETURE_APRES_DEBUT = 15 min" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="Seance" vertex="1">
+          <mxGeometry y="42" width="420" height="248" as="geometry" />
+        </mxCell>
+        <mxCell id="EtatPlace" value="«Value Object (record)»&lt;br&gt;EtatPlace" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="60" y="450" width="290" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="EtatPlaceb" value="statut : StatutPlace&lt;br&gt;commande : CommandeId  (null si libre)&lt;br&gt;bloqueeJusqua : LocalDateTime&lt;br&gt;&lt;hr&gt;&lt;br&gt;+ libre() / bloquee(commande, jusqua) / vendue(commande)&lt;br&gt;+ estLibreA(maintenant) : boolean&lt;br&gt;+ blocageExpireA(maintenant) : boolean&lt;br&gt;+ estBloqueePar(commande) : boolean" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="EtatPlace" vertex="1">
+          <mxGeometry y="42" width="290" height="138" as="geometry" />
+        </mxCell>
+        <mxCell id="StatutPlace" value="«enumeration»&lt;br&gt;StatutPlace" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="370" y="450" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="StatutPlaceb" value="LIBRE&lt;br&gt;BLOQUEE&lt;br&gt;VENDUE" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="StatutPlace" vertex="1">
+          <mxGeometry y="42" width="110" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="ErrSeance" value="«ErreurMetier»&lt;br&gt;Erreurs de Seance" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="60" y="670" width="420" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ErrSeanceb" value="VenteFermee(seance)  — vente close 15 min après le début&lt;br&gt;PlaceInconnue(seance, place)  — hors plan de salle&lt;br&gt;PlacesIndisponibles(places)  — place bloquée ou vendue (B1, B3 : tout ou rien)" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="ErrSeance" vertex="1">
+          <mxGeometry y="42" width="420" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="Commande" value="«Aggregate Root»&lt;br&gt;Commande" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="560" y="120" width="480" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="Commandeb" value="- id : CommandeId&lt;br&gt;- seance : SeanceId  (référence par identité)&lt;br&gt;- billets : List&amp;lt;Billet&amp;gt;  (1 à 10)&lt;br&gt;- expireA : LocalDateTime&lt;br&gt;- statut : StatutCommande&lt;br&gt;- evenements : List&amp;lt;EvenementVente&amp;gt;&lt;br&gt;&lt;hr&gt;&lt;br&gt;+ creer(id, seance, billets, expireA) : Commande&lt;br&gt;+ reconstituer(id, seance, billets, expireA, statut)&lt;br&gt;+ total() : Montant&lt;br&gt;+ places() : Set&amp;lt;PlaceId&amp;gt;&lt;br&gt;+ payer(maintenant)&lt;br&gt;+ expirer(maintenant)&lt;br&gt;+ aRembourser(maintenant)&lt;br&gt;+ retirerEvenements() : List&amp;lt;EvenementVente&amp;gt;&lt;br&gt;&lt;hr&gt;&lt;br&gt;MAX_PLACES = 10" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="Commande" vertex="1">
+          <mxGeometry y="42" width="480" height="268" as="geometry" />
+        </mxCell>
+        <mxCell id="Billet" value="«Value Object (record)»&lt;br&gt;Billet" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="560" y="450" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Billetb" value="place : PlaceId&lt;br&gt;tarif : Tarif" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="Billet" vertex="1">
+          <mxGeometry y="42" width="220" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Tarif" value="«Value Object (record)»&lt;br&gt;Tarif" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="820" y="450" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Tarifb" value="categorie : Categorie&lt;br&gt;prix : Montant" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="Tarif" vertex="1">
+          <mxGeometry y="42" width="220" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Categorie" value="«enumeration»&lt;br&gt;Categorie" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="820" y="560" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Categorieb" value="PLEIN, REDUIT, ENFANT, MATIN, ABONNE" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="Categorie" vertex="1">
+          <mxGeometry y="42" width="220" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="StatutCommande" value="«enumeration»&lt;br&gt;StatutCommande" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#82b366;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="560" y="560" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="StatutCommandeb" value="EN_ATTENTE_PAIEMENT&lt;br&gt;PAYEE&lt;br&gt;EXPIREE&lt;br&gt;A_REMBOURSER" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="StatutCommande" vertex="1">
+          <mxGeometry y="42" width="220" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="ErrCommande" value="«ErreurMetier»&lt;br&gt;Erreurs de Commande" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="560" y="700" width="480" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="ErrCommandeb" value="CommandeVide  — aucune place&lt;br&gt;TropDePlaces(n)  — plus de 10 places&lt;br&gt;PlaceEnDouble(place)  — même place deux fois&lt;br&gt;TransitionInterdite(commande, statut, action)  — cycle de vie violé" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="ErrCommande" vertex="1">
+          <mxGeometry y="42" width="480" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="EvenementVente" value="«sealed interface»&lt;br&gt;EvenementVente" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#d79b00;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="120" width="360" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="EvenementVenteb" value="commande() : CommandeId&lt;br&gt;survenuLe() : LocalDateTime" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="EvenementVente" vertex="1">
+          <mxGeometry y="42" width="360" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="CommandePayee" value="«record»&lt;br&gt;CommandePayee" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="220" width="360" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CommandePayeeb" value="commande, seance, places : Set&amp;lt;PlaceId&amp;gt;, total : Montant, survenuLe" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="CommandePayee" vertex="1">
+          <mxGeometry y="42" width="360" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="CommandeExpiree" value="«record»&lt;br&gt;CommandeExpiree" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="300" width="360" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="CommandeExpireeb" value="commande, seance, survenuLe" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="CommandeExpiree" vertex="1">
+          <mxGeometry y="42" width="360" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="PaiementARembourser" value="«record»&lt;br&gt;PaiementARembourser" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="380" width="360" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="PaiementARembourserb" value="commande, montant : Montant, survenuLe" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="PaiementARembourser" vertex="1">
+          <mxGeometry y="42" width="360" height="-17" as="geometry" />
+        </mxCell>
+        <mxCell id="SeanceId" value="«record»&lt;br&gt;SeanceId" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#666666;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="490" width="175" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="SeanceIdb" value="valeur : String  (non vide)" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="SeanceId" vertex="1">
+          <mxGeometry y="42" width="175" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="CommandeId" value="«record»&lt;br&gt;CommandeId" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#666666;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1305" y="490" width="175" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="CommandeIdb" value="valeur : String  (non vide)&lt;br&gt;+ nouvelle() : « C-xxxxxxxx »" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="CommandeId" vertex="1">
+          <mxGeometry y="42" width="175" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="PlaceId" value="«record»&lt;br&gt;PlaceId" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#666666;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="590" width="175" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="PlaceIdb" value="rang : char (A-Z), numero : int (≥ 1)&lt;br&gt;+ de(code) : « A12 »&lt;br&gt;ordre : rang puis numéro" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="PlaceId" vertex="1">
+          <mxGeometry y="42" width="175" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="Montant" value="«record»&lt;br&gt;Montant" style="swimlane;fontStyle=1;align=center;startSize=42;html=1;whiteSpace=wrap;fillColor=#ffffff;strokeColor=#666666;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry x="1305" y="590" width="175" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Montantb" value="centimes : long  (≥ 0)&lt;br&gt;ZERO, plus(autre)&lt;br&gt;affiche « 18,00 € »" style="text;html=1;align=left;verticalAlign=top;spacingLeft=6;whiteSpace=wrap;overflow=hidden;fontSize=11;" parent="Montant" vertex="1">
+          <mxGeometry y="42" width="175" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="1 → 1..* places" style="html=1;fontSize=11;endArrow=none;startArrow=diamondThin;startFill=1;startSize=14;" parent="1" source="Seance" target="EtatPlace" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="" style="html=1;fontSize=11;endArrow=open;endSize=10;" parent="1" source="EtatPlace" target="StatutPlace" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="1..10 billets" style="html=1;fontSize=11;endArrow=none;startArrow=diamondThin;startFill=1;startSize=14;" parent="1" source="Commande" target="Billet" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="" style="html=1;fontSize=11;endArrow=open;endSize=10;" parent="1" source="Billet" target="Tarif" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="" style="html=1;fontSize=11;endArrow=open;endSize=10;" parent="1" source="Tarif" target="Categorie" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="" style="html=1;fontSize=11;endArrow=open;endSize=10;" parent="1" source="Commande" target="StatutCommande" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="référence par identité : SeanceId / CommandeId (jamais d&#39;objet)" style="html=1;fontSize=11;endArrow=open;endSize=10;dashed=1;" parent="1" source="Commande" target="Seance" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="enregistre" style="html=1;fontSize=11;endArrow=open;endSize=10;dashed=1;" parent="1" source="Commande" target="EvenementVente" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_CommandePayee" value="" style="html=1;fontSize=11;endArrow=block;endFill=0;endSize=10;dashed=1;" parent="1" source="CommandePayee" target="EvenementVente" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_CommandeExpiree" value="" style="html=1;fontSize=11;endArrow=block;endFill=0;endSize=10;dashed=1;" parent="1" source="CommandeExpiree" target="EvenementVente" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_PaiementARembourser" value="" style="html=1;fontSize=11;endArrow=block;endFill=0;endSize=10;dashed=1;" parent="1" source="PaiementARembourser" target="EvenementVente" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="lève" style="html=1;fontSize=11;endArrow=open;endSize=8;dashed=1;" parent="1" source="Seance" target="ErrSeance" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="lève" style="html=1;fontSize=11;endArrow=open;endSize=8;dashed=1;" parent="1" source="Commande" target="ErrCommande" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="inv" value="Invariants → agrégat qui les protège&lt;br&gt;B1 / B3 : une place n&#39;est jamais vendue deux fois, la demande réussit en entier ou pas du tout → Seance.bloquer / vendre (vérifie toutes les places avant d&#39;en modifier une)&lt;br&gt;B2 : un blocage dure 10 min, puis la place redevient libre → Seance.DUREE_BLOCAGE, libererBlocagesExpires&lt;br&gt;Vente close 15 min après le début → Seance.venteOuverteA&lt;br&gt;1 à 10 places distinctes par commande → Commande.creer    ·    cycle EN_ATTENTE_PAIEMENT → PAYEE | EXPIREE → A_REMBOURSER → Commande.payer / expirer / aRembourser&lt;br&gt;Concurrence : Seance est l&#39;unité de cohérence (version) ; Commande ne tient que SeanceId, les deux agrégats se coordonnent par le service d&#39;application et les événements" style="shape=note;size=12;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=6;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="40" y="870" width="1460" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="legende" value="Légende : losange plein = composition (dans l&#39;agrégat) · flèche pointillée ouverte = référence par identité / lève / enregistre · triangle creux pointillé = implémente&lt;br&gt;Bleu = agrégat Seance · vert = agrégat Commande · orange = événements · rouge = erreurs métier · gris = value objects partagés" style="shape=note;size=12;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=6;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="40" y="990" width="1460" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
