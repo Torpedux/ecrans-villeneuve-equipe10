@@ -1,7 +1,10 @@
 package com.ecrans.vente.config;
 
 import com.ecrans.vente.adapter.in.payvia.WebhookPayVia;
+import com.ecrans.vente.adapter.in.sortiesflash.AclSortiesFlash;
+import com.ecrans.vente.adapter.in.sortiesflash.CorrespondanceSeances;
 import com.ecrans.vente.application.port.in.ConfirmerPaiement;
+import com.ecrans.vente.application.port.in.EnregistrerVentePartenaire;
 import com.ecrans.vente.application.port.in.ExpirerBlocages;
 import com.ecrans.vente.application.port.in.ReserverDesPlaces;
 import com.ecrans.vente.domaine.commun.PlaceId;
@@ -13,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Clock;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +51,25 @@ public class VenteConfiguration {
     @Bean
     WebhookPayVia webhookPayVia(ApplicationVente app) {
         return app.webhookPayVia;
+    }
+
+    @Bean
+    EnregistrerVentePartenaire enregistrerVentePartenaire(ApplicationVente app) {
+        return app.enregistrerVentePartenaire;
+    }
+
+    /** Leur identifiant de séance → le nôtre. En production, la Programmation l'alimenterait. */
+    @Bean
+    CorrespondanceSeances correspondanceSeances() {
+        CorrespondanceSeances correspondance = new CorrespondanceSeances();
+        String demain = LocalDate.now().plusDays(1).format(DateTimeFormatter.BASIC_ISO_DATE);
+        correspondance.associer("VIL-" + demain + "-2030-S3", new SeanceId("S42"));
+        return correspondance;
+    }
+
+    @Bean
+    AclSortiesFlash aclSortiesFlash(CorrespondanceSeances correspondance) {
+        return new AclSortiesFlash(correspondance);
     }
 
     /** La Programmation n'existe pas encore : on publie à la main la séance S42,

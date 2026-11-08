@@ -7,9 +7,11 @@ import com.ecrans.vente.adapter.out.memoire.SeancesEnMemoire;
 import com.ecrans.vente.adapter.out.paiement.PaiementsSimules;
 import com.ecrans.vente.adapter.out.tarification.GrilleTarifaireFixe;
 import com.ecrans.vente.application.port.in.ConfirmerPaiement;
+import com.ecrans.vente.application.port.in.EnregistrerVentePartenaire;
 import com.ecrans.vente.application.port.in.ExpirerBlocages;
 import com.ecrans.vente.application.port.in.ReserverDesPlaces;
 import com.ecrans.vente.application.service.ConfirmerPaiementService;
+import com.ecrans.vente.application.service.EnregistrerVentePartenaireService;
 import com.ecrans.vente.application.service.ExpirerBlocagesService;
 import com.ecrans.vente.application.service.ReserverDesPlacesService;
 
@@ -32,6 +34,7 @@ public class ApplicationVente {
     public final ReserverDesPlaces reserverDesPlaces;
     public final ConfirmerPaiement confirmerPaiement;
     public final ExpirerBlocages expirerBlocages;
+    public final EnregistrerVentePartenaire enregistrerVentePartenaire;
 
     // adapters primaires
     public final WebhookPayVia webhookPayVia;
@@ -40,6 +43,7 @@ public class ApplicationVente {
         reserverDesPlaces = new ReserverDesPlacesService(seances, commandes, grille, paiements, horloge);
         confirmerPaiement = new ConfirmerPaiementService(seances, commandes, publicateur, horloge);
         expirerBlocages = new ExpirerBlocagesService(seances, commandes, publicateur, horloge);
+        enregistrerVentePartenaire = new EnregistrerVentePartenaireService(seances, commandes, grille, publicateur, horloge);
         webhookPayVia = new WebhookPayVia(confirmerPaiement);
     }
 }
