@@ -7,16 +7,26 @@ Nous concevons et construisons le cœur de la billetterie d'un multiplexe de 8 s
 
 ## Sommaire
 
-- [Le problème](#le-problème)
-- [L'équipe et la répartition des tâches](#léquipe-et-la-répartition-des-tâches)
-- [Architecture en bref](#architecture-en-bref)
-- [Organisation du dépôt](#organisation-du-dépôt)
-- [Lancer le projet](#lancer-le-projet)
-- [Les étapes du TP](#les-étapes-du-tp)
-- [Le DAT et les diagrammes](#le-dat-et-les-diagrammes)
-- [Restitution orale](#restitution-orale)
-- [Jalons](#jalons)
-- [Conventions de travail](#conventions-de-travail)
+- [Les Écrans de Villeneuve — Billetterie (équipe 10)](#les-écrans-de-villeneuve--billetterie-équipe-10)
+  - [Sommaire](#sommaire)
+  - [Le problème](#le-problème)
+    - [Nos trois objectifs de qualité](#nos-trois-objectifs-de-qualité)
+  - [L'équipe et la répartition des tâches](#léquipe-et-la-répartition-des-tâches)
+  - [Architecture en bref](#architecture-en-bref)
+    - [Un seul core : la Vente de places](#un-seul-core--la-vente-de-places)
+    - [L'hexagone de la Vente](#lhexagone-de-la-vente)
+    - [Parcours « réserver et payer »](#parcours--réserver-et-payer-)
+    - [La décision défendue : ADR-0002 (verrou sur la séance)](#la-décision-défendue--adr-0002-verrou-sur-la-séance)
+    - [Une hypothèse : pas de blocage au guichet](#une-hypothèse--pas-de-blocage-au-guichet)
+  - [Organisation du dépôt](#organisation-du-dépôt)
+  - [Lancer le projet](#lancer-le-projet)
+    - [Les tests](#les-tests)
+    - [L'application et Swagger](#lapplication-et-swagger)
+  - [Les étapes du TP](#les-étapes-du-tp)
+  - [Le DAT et les diagrammes](#le-dat-et-les-diagrammes)
+  - [Restitution orale](#restitution-orale)
+  - [Jalons](#jalons)
+  - [Conventions de travail](#conventions-de-travail)
 
 ## Le problème
 
@@ -193,9 +203,9 @@ Chacun répond aux questions sur toutes les parties, y compris celles qu'il n'a 
 - [x] **J4, phase 1** : glossaire, context map et grille dans le DAT
 - [x] **J4, phase 2** : étapes 1 à 5 faites, recherches de l'étape 6
 - [x] **Avant le J5** : étapes 7 et 8 faites (Spring Boot, vente partenaire, ACL SortiesFlash)
-- [ ] **J5, finalisation** : DAT complet (sections 5, 7, 11 à vérifier), export PDF dans `ecrans-villeneuve/docs/`
-- [ ] **Tag `v1.0`** poussé
-- [ ] **Rendu sur Moodle** : lien de ce dépôt, avant les passages
+- [x] **J5, finalisation** : DAT complet (sections 5, 7, 11 à vérifier), export PDF dans `ecrans-villeneuve/docs/`
+- [x] **Tag `v1.0`** poussé
+- [x] **Rendu sur Moodle** : lien de ce dépôt, avant les passages
 
 ## Conventions de travail
 
